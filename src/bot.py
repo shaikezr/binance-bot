@@ -241,10 +241,46 @@ def getTrades(token, secretKey, symbol, timestamp=getTimestamp(), limit=None, fr
 	params['signature']=signature
 	return requests.get(baseURL+accountTradesURL, headers={"X-MBX-APIKEY":token}, params=params).json()
 
+def buyAdvised(token, symbol, threshhold, startingPrice=None, pollingInterval=None):
+	#returns true when price moves down a certain percent
+	if pollingInterval==None:
+		interval = 1
+	if startingPrice==None:
+		startingPrice = float(getPrice(token, symbol)['price'])
+	while True:
+		currentPrice = float(getPrice(token,symbol)['price'])
+		currentDifference = (1-(currentPrice/startingPrice))*100
+		if currentDifference>=threshhold:
+			print("buy advised\nstartingPrice: {0}\ncurrentPrice: {1}".format(startingPrice, currentPrice))
+			return True
+		print("Not Yet:\nstartingPrice: {0}\ncurrentPrice: {1}".format(startingPrice, currentPrice))
+		time.sleep(interval)
+
+def sellAdvised(token, symbol, threshhold, startingPrice=None, pollingInterval=None):
+	#returns true when price up a certain percent
+	if pollingInterval==None:
+		interval = 1
+	if startingPrice==None:
+		startingPrice = float(getPrice(token, symbol)['price'])
+	while True:
+		currentPrice = float(getPrice(token,symbol)['price'])
+		currentDifference = ((currentPrice-startingPrice)/startingPrice)*100
+		if currentDifference>=threshhold:
+			print("sell advised\nstartingPrice: {0}\ncurrentPrice: {1}".format(startingPrice, currentPrice))
+			return True
+		print("Not Yet:\nstartingPrice: {0}\ncurrentPrice: {1}".format(startingPrice, currentPrice))
+		time.sleep(interval)
 
 
 
-print(newOrder(token, secretKey, "ETHBTC", "BUY", "LIMIT", "1", price=.9, timeInForce="GTC", live=False))
+
+buyAdvised(token, "XRPETH", 1)
+
+
+
+
+
+#print(newOrder(token, secretKey, "ETHBTC", "BUY", "LIMIT", "1", price=.9, timeInForce="GTC", live=False))
 
 
 
