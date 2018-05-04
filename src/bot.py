@@ -208,10 +208,9 @@ def getAllOrders(token, secretKey, symbol, timestamp=getTimestamp(), recvWindow=
 def getAccountInfo(token, secretKey, timestamp=getTimestamp(), recvWindow=None):
 	#gets account info
 	global baseURL, accountInfoURL
-	message="symbol={0}&timestamp={1}".format(symbol, timestamp)
+	message="timestamp={}".format(timestamp)
 	params={
-		"symbol":symbol,
-		"timestamp":timestamp,
+		"timestamp":timestamp
 	}
 	if recvWindow:
 		params['recvWindow']=recvWindow
