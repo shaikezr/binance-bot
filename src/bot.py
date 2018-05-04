@@ -4,8 +4,8 @@ import hashlib
 import base64
 import time
 
-token = "7TiwEqUntFyuA8dxAtS0D7Z8XdGAbHab8LeIVYuNQl9ypI2UAqzqmTZnJRoFpMtk"
-secretKey = b"kIYDIjRNdc75hAdVF1C2GYwg67L3TUVKmhZQuRFs7mZroumC2gH3XTZGZp78sFe0"
+token = "YOUR TOKEN"
+secretKey = b"YOUR SECRETKEY"
 
 baseURL = "https://api.binance.com"
 pingURL = "/api/v1/ping"
